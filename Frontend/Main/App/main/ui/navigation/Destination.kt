@@ -4,8 +4,7 @@ import ProjectContext
 
 object Route {
     // region Init
-    var projectContext: ProjectContext = ProjectContext()
-        private set
+    lateinit var projectContext: ProjectContext
     val webHostUrl = projectContext.webHostUrl
     val deepLinkHostUrl = projectContext.deepLinkHostUrl
 
