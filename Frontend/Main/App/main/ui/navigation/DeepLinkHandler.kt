@@ -23,8 +23,6 @@ class DeepLinkHandler(private val navController: NavHostController) {
      */
     fun handleDeepLink(url: String): Boolean {
         val destination = when {
-            url.contains("/about") -> Route.AboutDestination
-            url.contains("/security/setting") -> Route.SecuritySettingDestination
             url.contains("/help") -> Route.HelpAndSupportDestination
             url.contains("/account/setting") -> Route.AccountSettingDestination
             url.contains("/notification/setting") -> Route.NotificationSettingDestination
