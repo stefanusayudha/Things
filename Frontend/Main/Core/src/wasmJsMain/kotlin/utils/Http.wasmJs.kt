@@ -9,34 +9,42 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
+private var httpClient: HttpClient? = null
+
 actual fun defaultHttpClient(webHostUrl: String): HttpClient {
-    return HttpClient(Js) {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                isLenient = true
-                encodeDefaults = false
-            })
-        }
-
-        install(Logging) {
-            logger = object : Logger {
-                override fun log(message: String) {
-                    println("KtorHttp: $message")
-                }
+    requireNotNull(httpClient) {
+        HttpClient(Js) {
+            install(ContentNegotiation) {
+                json(Json {
+                    ignoreUnknownKeys = true
+                    isLenient = true
+                    encodeDefaults = false
+                })
             }
-            level = LogLevel.ALL
+
+            install(Logging) {
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        println("KtorHttp: $message")
+                    }
+                }
+                level = LogLevel.ALL
+            }
+
+            defaultRequest {
+                // Replace with your actual API base URL
+                url(webHostUrl)
+                headers.append("Accept", ContentType.Application.Json.toString())
+                headers.append("Content-Type", ContentType.Application.Json.toString())
+            }
+
+            engine {
+
+            }
         }
 
-        defaultRequest {
-            // Replace with your actual API base URL
-            url(webHostUrl)
-            headers.append("Accept", ContentType.Application.Json.toString())
-            headers.append("Content-Type", ContentType.Application.Json.toString())
-        }
-
-        engine {
-
-        }
+        return httpClient!!
     }
+
+    return httpClient!!
 }
