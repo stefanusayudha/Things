@@ -13,15 +13,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import ui.screen.about.AboutScreen
-import ui.screen.account.AccountSettingScreen
-import ui.screen.home.HomeScreen
-import ui.screen.login.LoginScreen
-import ui.screen.notification.NotificationSettingScreen
-import ui.screen.otp.OtpScreen
-import ui.screen.poet.PoetScreen
-import ui.screen.security.SecuritySettingScreen
-import ui.screen.support.HelpAndSupportScreen
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview
@@ -43,26 +34,13 @@ fun MainNavigation(
         composable(
             route = Route.LoginDestination
         ) {
-            LoginScreen(
-                goToOtpVerification = { email ->
-                    controller.navigate(
-                        Route.OtpVerificationDestinationBuilder(
-                            Route.OtpPurpose.LOGIN_VERIFICATION,
-                            email
-                        )
-                    )
-                }
-            )
+
         }
 
         composable(
             route = Route.PoetDestination
         ) {
-            PoetScreen(
-                onNavigateBack = {
-                    controller.popBackStack()
-                }
-            )
+
         }
 
         composable(
@@ -74,21 +52,7 @@ fun MainNavigation(
                 }
             ),
         ) {
-            val purpose = it.savedStateHandle.get<String>("purpose")
-                ?.let { Route.OtpPurpose.valueOf(it) }
-                ?: return@composable
 
-            val data = it.savedStateHandle.get<String>("data")
-
-            OtpScreen(
-                purpose = purpose,
-                data = data,
-                goToHome = {
-                    controller.navigate(
-                        Route.HomeDestinationBuilder(Route.HomeSection.COLORS)
-                    )
-                }
-            )
         }
 
         composable(
@@ -100,7 +64,7 @@ fun MainNavigation(
                 }
             ),
         ) {
-            HomeScreen()
+
         }
 
         composable(
@@ -110,7 +74,7 @@ fun MainNavigation(
                 navDeepLink { uriPattern = Route.AboutCustomDeepLink }
             )
         ) {
-            AboutScreen()
+
         }
 
         composable(
@@ -120,7 +84,7 @@ fun MainNavigation(
                 navDeepLink { uriPattern = Route.SecuritySettingCustomDeepLink }
             )
         ) {
-            SecuritySettingScreen()
+
         }
 
         composable(
@@ -130,7 +94,7 @@ fun MainNavigation(
                 navDeepLink { uriPattern = Route.HelpAndSupportCustomDeepLink }
             )
         ) {
-            HelpAndSupportScreen()
+
         }
 
         composable(
@@ -140,7 +104,7 @@ fun MainNavigation(
                 navDeepLink { uriPattern = Route.AccountSettingCustomDeepLink }
             )
         ) {
-            AccountSettingScreen()
+
         }
 
         composable(
@@ -150,7 +114,7 @@ fun MainNavigation(
                 navDeepLink { uriPattern = Route.NotificationSettingCustomDeepLink }
             )
         ) {
-            NotificationSettingScreen()
+
         }
     }
 }
