@@ -10,7 +10,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -33,56 +32,6 @@ fun MainNavigation(
     ) {
         composable(
             route = Route.LoginDestination
-        ) {
-
-        }
-
-        composable(
-            route = Route.PoetDestination
-        ) {
-
-        }
-
-        composable(
-            route = Route.OtpVerificationDestination,
-            arguments = listOf(
-                navArgument("purpose") {
-                    defaultValue = null
-                    nullable = true
-                }
-            ),
-        ) {
-
-        }
-
-        composable(
-            route = Route.HomeDestination,
-            arguments = listOf(
-                navArgument("section") {
-                    defaultValue = Route.HomeSection.COLORS.name
-                    nullable = true
-                }
-            ),
-        ) {
-
-        }
-
-        composable(
-            route = Route.AboutDestination,
-            deepLinks = listOf(
-                navDeepLink { uriPattern = Route.AboutDeepLink },
-                navDeepLink { uriPattern = Route.AboutCustomDeepLink }
-            )
-        ) {
-
-        }
-
-        composable(
-            route = Route.SecuritySettingDestination,
-            deepLinks = listOf(
-                navDeepLink { uriPattern = Route.SecuritySettingDeepLink },
-                navDeepLink { uriPattern = Route.SecuritySettingCustomDeepLink }
-            )
         ) {
 
         }
