@@ -30,7 +30,7 @@ class ThingsDBClient : ThingsDB {
                     }
                     .limit(1).firstOrNull()
 
-                check(existing == null) {
+                require(existing == null) {
                     val duplicateField = when {
                         existing?.get(ThingsTable.uuid) == thing.uuid -> "uuid"
                         existing?.get(ThingsTable.serialNumber) == thing.serialNumber -> "serial_number"
