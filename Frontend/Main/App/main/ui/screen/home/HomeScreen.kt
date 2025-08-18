@@ -16,88 +16,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import font.resources.Res
+import font.resources.ic_add
+import font.resources.ic_search
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.component.BurgerMenu
 import ui.component.Drawer
 import utils.pxToDp
-
-enum class MainTab {
-    DASHBOARD, THINGS, FLEETS, LOGS
-}
-
-data class HomeScreenState(
-    val title: String = "Console/Dashboard",
-    val isShowDrawer: Boolean = true,
-    val mainTab: MainTab = MainTab.DASHBOARD
-)
-
-class HomeScreenViewModel : ViewModel() {
-    val state: StateFlow<HomeScreenState>
-        field = MutableStateFlow(HomeScreenState())
-
-    suspend fun onIntent(intent: HomeScreenIntent) {
-        when (intent) {
-            HomeScreenIntent.ToggleOpenDrawer -> onToggleOpenDrawer()
-            HomeScreenIntent.GoToDashboard -> onGoToDashboard()
-            HomeScreenIntent.GoToFleets -> onGoToFleets()
-            HomeScreenIntent.GoToLogs -> onGoToLogs()
-            HomeScreenIntent.GoToThings -> onGoToThings()
-        }
-    }
-
-    private fun onToggleOpenDrawer() {
-        state.update {
-            it.copy(isShowDrawer = !it.isShowDrawer)
-        }
-    }
-
-    private fun onGoToDashboard() {
-        state.update {
-            it.copy(
-                mainTab = MainTab.DASHBOARD
-            )
-        }
-    }
-
-    private fun onGoToFleets() {
-        state.update {
-            it.copy(
-                mainTab = MainTab.FLEETS
-            )
-        }
-    }
-
-    private fun onGoToLogs() {
-        state.update {
-            it.copy(
-                mainTab = MainTab.LOGS
-            )
-        }
-    }
-
-    private fun onGoToThings() {
-        state.update {
-            it.copy(
-                mainTab = MainTab.THINGS
-            )
-        }
-    }
-}
-
-sealed class HomeScreenIntent {
-    data object ToggleOpenDrawer : HomeScreenIntent()
-    data object GoToDashboard : HomeScreenIntent()
-    data object GoToThings : HomeScreenIntent()
-    data object GoToFleets : HomeScreenIntent()
-    data object GoToLogs : HomeScreenIntent()
-}
 
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
@@ -129,6 +58,56 @@ fun HomeScreen() {
                 },
             )
         },
+        floatingActionButton = {
+            when (state.mainTab) {
+                MainTab.DASHBOARD -> {
+                    ExtendedFloatingActionButton(
+                        text = {
+                            Text("Search")
+                        },
+                        icon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.ic_search),
+                                contentDescription = null
+                            )
+                        },
+                        onClick = {}
+                    )
+                }
+
+                MainTab.THINGS -> {
+                    ExtendedFloatingActionButton(
+                        text = {
+                            Text("Add")
+                        },
+                        icon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.ic_add),
+                                contentDescription = null
+                            )
+                        },
+                        onClick = {}
+                    )
+                }
+
+                MainTab.FLEETS -> {
+                    ExtendedFloatingActionButton(
+                        text = {
+                            Text("Add")
+                        },
+                        icon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.ic_add),
+                                contentDescription = null
+                            )
+                        },
+                        onClick = {}
+                    )
+                }
+
+                MainTab.LOGS -> {}
+            }
+        }
     ) { contentPadding ->
         Box(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(
