@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import service.things.ThingsService
 
 
@@ -28,6 +30,7 @@ sealed class ThingsPaneIntent {
 }
 
 data class ThingsPaneState(
+    val refreshProgressIsShown: Boolean = false,
     val things: List<ThingsDisplay> = emptyList()
 )
 
@@ -48,8 +51,32 @@ class ThingsPaneViewModel(
         }
     }
 
-    private fun onRefresh() {
+    private suspend fun onRefresh() {
+        uiState.update {
+            it.copy(
+                refreshProgressIsShown = true
+            )
+        }
+        thingsService.getListOfThings()
+            .onFailure {
+                // todo: handle fail
+                println("aksdjalds $it")
+            }
+            .onSuccess {response ->
+                uiState.update {
+                    it.copy(
+                        things = response.map {
+                            ThingsDisplay(it)
+                        }
+                    )
+                }
+            }
 
+        uiState.update {
+            it.copy(
+                refreshProgressIsShown = false
+            )
+        }
     }
 }
 
@@ -60,6 +87,11 @@ fun ThingsPane(
     val projectContext = LocalProjectContext.current
     val viewModel = viewModel { ThingsPaneViewModel(projectContext) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    // fixme: get rid of this one off event
+    LaunchedEffect(Unit) {
+        viewModel.onIntent(ThingsPaneIntent.Refresh)
+    }
 
     Box(
         modifier = modifier

@@ -26,6 +26,7 @@ dependencies {
     api(libs.logback)
     api(libs.ktor.serverCore)
     api(libs.ktor.serverNetty)
+    api(libs.ktor.serverCors)
     api(libs.ktor.serverContentNegotiation)
     api(libs.ktor.serializationKotlinxJson)
 
