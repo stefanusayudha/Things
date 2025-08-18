@@ -5,7 +5,7 @@ plugins {
     application
 }
 
-group = "com.singularityuniverse.memories.core"
+group = "com.singularityuniverse.things"
 version = "1.0.0"
 
 application {

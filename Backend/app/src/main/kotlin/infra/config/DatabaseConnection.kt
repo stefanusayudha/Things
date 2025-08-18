@@ -15,7 +15,7 @@ object DatabaseConnection {
      */
     fun connection(
         driverClassName: String = "org.postgresql.Driver",
-        jdbcUrl: String = "jdbc:postgresql://localhost:5432/memories",
+        jdbcUrl: String = "jdbc:postgresql://localhost:5432/things",
         username: String = "root",
         password: String = "root",
         maximumPoolSize: Int = 10
