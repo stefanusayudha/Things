@@ -42,6 +42,9 @@ withKotlinMultiplatformExtension {
     sourceSets.iosMain {
         kotlin.srcDir("platform/ios")
     }
+    sourceSets.wasmJsMain {
+        kotlin.srcDir("platform/wasm")
+    }
 }
 
 dependency {
@@ -54,13 +57,6 @@ dependency {
         // Android-specific HTTP client
         api(libs.ktor.client.okhttp)
         api(libs.ktor.client.android)
-
-        // Room
-        api(libs.room.runtime)
-        api(libs.sqlite.bundled)
-
-        // Singularity
-        api(libs.waterfall)
     }
 
     ios {
@@ -68,13 +64,6 @@ dependency {
 
         // iOS-specific HTTP client
         api(libs.ktor.client.darwin)
-
-        // Room
-        api(libs.room.runtime)
-        api(libs.sqlite.bundled)
-
-        // Singularity
-        api(libs.waterfall)
     }
 
     common {

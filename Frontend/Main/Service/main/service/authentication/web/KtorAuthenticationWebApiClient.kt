@@ -1,11 +1,10 @@
 package service.authentication.web
 
 import io.ktor.client.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import model.particle.AuthenticationToken
 import model.particle.Email
 import model.particle.Otp
+import utils.ioDispatchers
 import utils.runCatching
 
 class KtorAuthenticationWebApiClient(
@@ -13,7 +12,7 @@ class KtorAuthenticationWebApiClient(
 ) : AuthenticationWebApiClient {
 
     override suspend fun requestOtp(email: Email): Result<Unit> {
-        return runCatching(Dispatchers.IO) {
+        return runCatching(ioDispatchers()) {
             //val response = httpClient.post("auth/request-otp") {
             //    contentType(ContentType.Application.Json)
             //    setBody(RequestOtpRequest(email.email))
@@ -26,7 +25,7 @@ class KtorAuthenticationWebApiClient(
     }
 
     override suspend fun authenticateByOtp(email: Email, otp: Otp, purpose: String): Result<AuthenticationToken> {
-        return runCatching(Dispatchers.IO) {
+        return runCatching(ioDispatchers()) {
             TODO()
             //val response = httpClient.post("auth/authenticate") {
             //    contentType(ContentType.Application.Json)
