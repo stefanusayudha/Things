@@ -26,6 +26,16 @@ class DependencyScope(private val project: Project) {
         }
     }
 
+    fun wasm(bloc: KotlinDependencyHandler.() -> Unit = {}) {
+        with(project) {
+            withKotlinMultiplatformExtension {
+                sourceSets {
+                    wasmJsMain.dependencies(bloc)
+                }
+            }
+        }
+    }
+
     fun common(bloc: KotlinDependencyHandler.() -> Unit = {}) {
         with(project) {
             withKotlinMultiplatformExtension {

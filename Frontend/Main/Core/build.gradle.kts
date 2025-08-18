@@ -60,10 +60,13 @@ dependency {
     }
 
     ios {
-        api(libs.kotlin.test)
-
         // iOS-specific HTTP client
         api(libs.ktor.client.darwin)
+    }
+
+    wasm {
+        // JS-specific HTTP client
+        api(libs.ktor.client.js)
     }
 
     common {
