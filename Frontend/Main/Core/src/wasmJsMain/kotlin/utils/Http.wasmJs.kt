@@ -13,7 +13,7 @@ private var httpClient: HttpClient? = null
 
 actual fun defaultHttpClient(webHostUrl: String): HttpClient {
     requireNotNull(httpClient) {
-        HttpClient(Js) {
+        httpClient = HttpClient(Js) {
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
