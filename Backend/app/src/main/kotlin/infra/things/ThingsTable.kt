@@ -1,14 +1,14 @@
-package infra.form.table
+package infra.things
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 
-object FormsTable : IntIdTable("forms") {
+object ThingsTable : IntIdTable("things") {
     val uuid = text("uuid").uniqueIndex()
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
     val updatedAt = datetime("updated_at").defaultExpression(CurrentDateTime)
-    val validUntil = datetime("valid_until").defaultExpression(CurrentDateTime)
-    val header = text("form_header").nullable()
-    val body = text("form_body").nullable()
+    val serialNumber = text("serial_number").nullable()
+    val name = text("name").nullable()
+    val model = text("model").nullable()
 }

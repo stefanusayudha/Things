@@ -9,7 +9,7 @@ group = "com.singularityuniverse.things"
 version = "1.0.0"
 
 application {
-    mainClass.set("ApplicationKt")
+    mainClass.set("bff.ApplicationKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
