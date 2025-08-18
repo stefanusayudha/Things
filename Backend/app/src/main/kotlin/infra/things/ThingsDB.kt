@@ -36,7 +36,8 @@ interface ThingsDB {
         return runCatching(Dispatchers.IO) {
             DatabaseConnection.connection()
             newSuspendedTransaction {
-                SchemaUtils.create(ThingsTable)
+                // Create table if it doesn't exist
+                SchemaUtils.createMissingTablesAndColumns(ThingsTable)
             }
         }
     }
@@ -45,6 +46,8 @@ interface ThingsDB {
         return runCatching(Dispatchers.IO) {
             DatabaseConnection.testConnection()
             newSuspendedTransaction {
+                // For testing, we can safely drop and recreate
+                SchemaUtils.drop(ThingsTable)
                 SchemaUtils.create(ThingsTable)
             }
         }

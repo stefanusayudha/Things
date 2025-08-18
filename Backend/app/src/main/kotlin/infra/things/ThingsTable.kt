@@ -6,9 +6,9 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 
 object ThingsTable : IntIdTable("things") {
     val uuid = text("uuid").uniqueIndex()
+    val serialNumber = text("serial_number").uniqueIndex()
+    val name = text("name").uniqueIndex()
+    val model = text("model")
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
     val updatedAt = datetime("updated_at").defaultExpression(CurrentDateTime)
-    val serialNumber = text("serial_number").nullable()
-    val name = text("name").nullable()
-    val model = text("model").nullable()
 }

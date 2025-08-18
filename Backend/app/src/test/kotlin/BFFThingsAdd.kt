@@ -25,6 +25,7 @@ class BFFThingsAdd {
         println("=== MAKING CURL REQUEST ===")
         println("URL: $serverURL")
         println("JSON Body: $jsonBody")
+        
         println("==============================")
 
         try {
@@ -40,6 +41,7 @@ class BFFThingsAdd {
                 "-d", jsonBody,
                 "--connect-timeout", "10",      // 10 second connection timeout
                 "--max-time", "30",             // 30 second total timeout
+                "--include",                    // Include response headers
                 serverURL
             )
 
@@ -76,8 +78,18 @@ class BFFThingsAdd {
                 
                 // Split response body and curl info
                 val parts = output.split("\n--- CURL INFO ---\n")
-                val responseBody = parts[0].trim()
+                val fullResponse = parts[0].trim()
                 val curlInfo = if (parts.size > 1) parts[1].trim() else ""
+
+                // Since we used --include, we need to separate headers from body
+                val headerBodySplit = fullResponse.split("\r\n\r\n", limit = 2)
+                val headers = if (headerBodySplit.size > 1) headerBodySplit[0] else ""
+                val responseBody = if (headerBodySplit.size > 1) headerBodySplit[1] else fullResponse
+
+                if (headers.isNotEmpty()) {
+                    println("📋 Response Headers:")
+                    println(headers)
+                }
 
                 if (responseBody.isNotEmpty()) {
                     println("📄 Response Body:")
@@ -89,6 +101,16 @@ class BFFThingsAdd {
                 if (curlInfo.isNotEmpty()) {
                     println("📊 Connection Info:")
                     println(curlInfo)
+                }
+                
+                // Additional debugging for 400 errors
+                if (curlInfo.contains("HTTP Status: 400")) {
+                    println("🔍 DEBUG: Received 400 Bad Request")
+                    println("This usually means:")
+                    println("  - JSON format is incorrect")
+                    println("  - Missing required fields") 
+                    println("  - Server validation failed")
+                    println("  - Content-Type header issue")
                 }
             } else {
                 println("❌ Request failed (exit code: $exitCode)")

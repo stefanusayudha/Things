@@ -4,13 +4,18 @@ import io.ktor.http.*
 import io.ktor.server.plugins.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Response<T : Any>(
+    @SerialName("success")
     val success: Boolean,
+    @SerialName("data")
     val data: T?,
+    @SerialName("error")
     val error: String?,
+    @SerialName("message")
     val message: String?,
 )
 
@@ -21,7 +26,7 @@ suspend fun commonErrorHandling(e: Throwable) {
             illegalCaller(e.message ?: "Illegal request.")
         }
 
-        is IllegalStateException, is BadRequestException -> {
+        is IllegalStateException, is BadRequestException, is IllegalArgumentException -> {
             badRequest(e.message ?: "Invalid request.")
         }
 
