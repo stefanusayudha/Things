@@ -4,6 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import model.Response
 import service.things.web.response.Thing
 import utils.ioDispatchers
 import utils.runCatching
@@ -14,15 +15,22 @@ class KtorThingsWebApiClient(
 
     override suspend fun getListOfThings(): Result<List<Thing>> {
         return runCatching(ioDispatchers()) {
-            val response = httpClient.get("things") {
+            val raw = httpClient.get("things") {
                 contentType(ContentType.Application.Json)
             }
 
-            check(response.status.isSuccess()) {
-                throw Exception("Failed to request OTP: ${response.status}")
+            check(raw.status.isSuccess()) {
+                throw Exception("Failed to request OTP: ${raw.status}")
             }
 
-            response.body<List<Thing>>()
+            val response = raw.body<Response<List<Thing>>>()
+
+            require(response.success) {
+                // fixme: map exception properly
+                throw Exception(response.error ?: "Unknown Error")
+            }
+
+            response.data.orEmpty()
         }
     }
 }
