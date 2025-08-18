@@ -2,6 +2,7 @@ import plugin.convention.companion.compileAndroidLibrary
 import plugin.convention.companion.compileIOSLibrary
 import plugin.convention.companion.compileWasmJs
 import plugin.convention.companion.dependency
+import plugin.convention.companion.enableContextParameter
 import plugin.convention.companion.withKotlinMultiplatformExtension
 
 plugins {
@@ -25,9 +26,11 @@ compileIOSLibrary(
 )
 
 compileWasmJs(
-    "MainApp.js",
-    "MainApp"
+    "mainApp.js",
+    "mainApp"
 )
+
+enableContextParameter()
 
 withKotlinMultiplatformExtension {
     sourceSets.commonMain {

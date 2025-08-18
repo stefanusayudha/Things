@@ -1,6 +1,7 @@
 import plugin.convention.companion.Main
 import plugin.convention.companion.compileWasmJs
 import plugin.convention.companion.dependency
+import plugin.convention.companion.enableContextParameter
 import plugin.convention.companion.withKotlinMultiplatformExtension
 
 plugins {
@@ -14,6 +15,8 @@ compileWasmJs(
     outputFileName = "composeApp.js",
     outputModuleName = "composeApp"
 )
+
+enableContextParameter()
 
 dependency {
     common {

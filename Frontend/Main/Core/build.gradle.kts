@@ -25,8 +25,8 @@ compileIOSLibrary(
 )
 
 compileWasmJs(
-    "MainCore.js",
-    "MainCore"
+    "mainCore.js",
+    "mainCore"
 )
 
 withKotlinMultiplatformExtension {

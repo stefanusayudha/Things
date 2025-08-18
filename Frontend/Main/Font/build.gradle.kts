@@ -24,8 +24,8 @@ compileIOSLibrary(
 )
 
 compileWasmJs(
-    "MainFont.js",
-    "MainFont"
+    "mainFont.js",
+    "mainFont"
 )
 
 compose.resources {

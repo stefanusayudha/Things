@@ -2,6 +2,7 @@ package ui.navigation
 
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -10,8 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navDeepLink
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.screen.home.HomeScreen
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview
@@ -24,46 +25,16 @@ fun MainNavigation(
     NavHost(
         modifier = modifier,
         navController = controller,
-        startDestination = Route.HomeDestination,
+        startDestination = "home",
         enterTransition = { slideIn { IntOffset(x = it.width, y = 0) } },
         popEnterTransition = { slideIn { IntOffset(x = -it.width, y = 0) } },
         exitTransition = { slideOut { IntOffset(x = -it.width, y = 0) } },
         popExitTransition = { slideOut { IntOffset(x = it.width, y = 0) } },
     ) {
         composable(
-            route = Route.LoginDestination
+            route = "home"
         ) {
-
-        }
-
-        composable(
-            route = Route.HelpAndSupportDestination,
-            deepLinks = listOf(
-                navDeepLink { uriPattern = Route.HelpAndSupportDeepLink },
-                navDeepLink { uriPattern = Route.HelpAndSupportCustomDeepLink }
-            )
-        ) {
-
-        }
-
-        composable(
-            route = Route.AccountSettingDestination,
-            deepLinks = listOf(
-                navDeepLink { uriPattern = Route.AccountSettingDeepLink },
-                navDeepLink { uriPattern = Route.AccountSettingCustomDeepLink }
-            )
-        ) {
-
-        }
-
-        composable(
-            route = Route.NotificationSettingDestination,
-            deepLinks = listOf(
-                navDeepLink { uriPattern = Route.NotificationSettingDeepLink },
-                navDeepLink { uriPattern = Route.NotificationSettingCustomDeepLink }
-            )
-        ) {
-
+            HomeScreen()
         }
     }
 }

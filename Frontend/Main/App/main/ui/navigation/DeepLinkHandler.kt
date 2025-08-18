@@ -23,12 +23,12 @@ class DeepLinkHandler(private val navController: NavHostController) {
      */
     fun handleDeepLink(url: String): Boolean {
         val destination = when {
-            url.contains("/help") -> Route.HelpAndSupportDestination
-            url.contains("/account/setting") -> Route.AccountSettingDestination
-            url.contains("/notification/setting") -> Route.NotificationSettingDestination
+            // url.contains("/help") -> Route.HelpAndSupportDestination
+            // url.contains("/account/setting") -> Route.AccountSettingDestination
+            // url.contains("/notification/setting") -> Route.NotificationSettingDestination
             else -> null
         }
-        check(destination != null) { return false }
+        requireNotNull(destination) { return false }
         navigateToDestination(destination)
         return true
     }

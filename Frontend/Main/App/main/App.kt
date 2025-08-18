@@ -1,4 +1,3 @@
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,7 +5,6 @@ import androidx.navigation.compose.rememberNavController
 import designsystemold.SingularityTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.navigation.MainNavigation
-import ui.navigation.rememberDeepLinkHandler
 
 @Preview
 @Composable
@@ -15,17 +13,17 @@ fun App(
     onHandled: (AppIntent) -> Unit = {}
 ) {
     val navController = rememberNavController()
-    val isDarkTheme = isSystemInDarkTheme()
-    val deepLinkHandler = rememberDeepLinkHandler(navController)
+    // val isDarkTheme = isSystemInDarkTheme()
+    // val deepLinkHandler = rememberDeepLinkHandler(navController)
 
-    IntentHandlerEffect(
-        intent,
-        deepLinkHandler,
-        onHandled
-    )
+    // IntentHandlerEffect(
+    //     intent,
+    //     deepLinkHandler,
+    //     onHandled
+    // )
 
     SingularityTheme(
-        darkTheme = isDarkTheme
+        darkTheme = false
     ) {
         MainNavigation(
             modifier = Modifier.fillMaxSize(),

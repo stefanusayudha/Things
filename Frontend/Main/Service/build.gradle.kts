@@ -24,8 +24,8 @@ compileIOSLibrary(
 )
 
 compileWasmJs(
-    outputFileName = "MainService.js",
-    outputModuleName = "MainService"
+    outputFileName = "mainService.js",
+    outputModuleName = "mainService"
 )
 
 withKotlinMultiplatformExtension {
