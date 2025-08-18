@@ -1,5 +1,6 @@
 import plugin.convention.companion.compileAndroidLibrary
 import plugin.convention.companion.compileIOSLibrary
+import plugin.convention.companion.compileWasmJs
 import plugin.convention.companion.dependency
 import plugin.convention.companion.withKotlinMultiplatformExtension
 
@@ -20,6 +21,11 @@ compileIOSLibrary(
     namespace = "com.singularityuniverse.singularity.main.font",
     baseName = "Font",
     isStatic = true
+)
+
+compileWasmJs(
+    "MainFont.js",
+    "MainFont"
 )
 
 compose.resources {

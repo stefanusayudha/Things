@@ -1,5 +1,6 @@
 import plugin.convention.companion.compileAndroidLibrary
 import plugin.convention.companion.compileIOSLibrary
+import plugin.convention.companion.compileWasmJs
 import plugin.convention.companion.dependency
 import plugin.convention.companion.withKotlinMultiplatformExtension
 
@@ -21,6 +22,11 @@ compileIOSLibrary(
     namespace = "com.singularityuniverse.singularity.main.app",
     baseName = "MainApp",
     isStatic = true
+)
+
+compileWasmJs(
+    "MainApp.js",
+    "MainApp"
 )
 
 withKotlinMultiplatformExtension {

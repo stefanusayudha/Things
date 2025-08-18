@@ -28,6 +28,6 @@ dependency {
         implementation(libs.androidx.lifecycle.viewmodel)
         implementation(libs.androidx.lifecycle.runtimeCompose)
 
-        // Main("App", transitive = true)
+         Main("App", transitive = true)
     }
 }
