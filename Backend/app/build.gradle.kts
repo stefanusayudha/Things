@@ -40,6 +40,10 @@ dependencies {
     implementation(libs.h2) // for testing
     implementation(libs.hikari)
 
+    // Kafka dependencies
+    implementation(libs.kafka.clients)
+    implementation(libs.kafka.streams)
+
     // Test dependencies
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
