@@ -1,4 +1,4 @@
-rootProject.name = "Singularity"
+rootProject.name = "Things"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
