@@ -13,6 +13,12 @@ context(route: Route)
 fun ThingsServiceBFF() {
     with(route) {
         route("/things") {
+            get("") {
+                listOfThings()
+            }
+            get("/") {
+                listOfThings()
+            }
             post("/add") {
                 addThing()
             }
@@ -39,6 +45,17 @@ suspend fun addThing() {
             model = request.model,
         )
     )
+        .onFailure {
+            return commonErrorHandling(it)
+        }.onSuccess {
+            return success(it, "")
+        }
+}
+
+context(context: RoutingContext, route: Route)
+suspend fun listOfThings() {
+
+    Infra.listOfThings()
         .onFailure {
             return commonErrorHandling(it)
         }.onSuccess {

@@ -53,4 +53,20 @@ class ThingsDBClient : ThingsDB {
             }
         }
     }
+
+    override suspend fun listOfThings(): Result<List<Thing>> {
+        return runCatching(Dispatchers.IO) {
+            newSuspendedTransaction(Dispatchers.IO) {
+                ThingsTable.selectAll()
+                    .map { row ->
+                        Thing(
+                            uuid = row[ThingsTable.uuid],
+                            name = row[ThingsTable.name],
+                            serialNumber = row[ThingsTable.serialNumber],
+                            model = row[ThingsTable.model]
+                        )
+                    }
+            }
+        }
+    }
 }

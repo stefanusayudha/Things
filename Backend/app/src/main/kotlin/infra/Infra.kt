@@ -8,4 +8,9 @@ object Infra {
         val thingsDB: ThingsDB = ThingsDB.Instance()
         return thingsDB.insert(thing)
     }
+
+    suspend fun listOfThings(): Result<List<Thing>> {
+        val thingsDB: ThingsDB = ThingsDB.Instance()
+        return thingsDB.listOfThings()
+    }
 }

@@ -54,4 +54,5 @@ interface ThingsDB {
     }
 
     suspend fun insert(thing: Thing): Result<Thing>
+    suspend fun listOfThings(): Result<List<Thing>>
 }
