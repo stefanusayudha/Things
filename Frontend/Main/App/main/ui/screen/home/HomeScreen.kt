@@ -48,7 +48,7 @@ fun HomeScreen() {
                 title = {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = state.title,
+                        text = "Console/${state.mainTab.name.lowercase().replaceFirstChar { it.titlecase() }}",
                         textAlign = TextAlign.Center
                     )
                 },
