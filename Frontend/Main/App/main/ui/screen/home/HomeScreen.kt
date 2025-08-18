@@ -4,12 +4,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.style.TextAlign
@@ -22,10 +24,11 @@ import font.resources.Res
 import font.resources.ic_add
 import font.resources.ic_search
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.component.BurgerMenu
 import ui.component.Drawer
+import ui.component.FAB
+import ui.component.Legend
 import utils.pxToDp
 
 @Preview
@@ -61,48 +64,30 @@ fun HomeScreen() {
         floatingActionButton = {
             when (state.mainTab) {
                 MainTab.DASHBOARD -> {
-                    ExtendedFloatingActionButton(
-                        text = {
-                            Text("Search")
-                        },
-                        icon = {
-                            Icon(
-                                painter = painterResource(Res.drawable.ic_search),
-                                contentDescription = null
-                            )
-                        },
-                        onClick = {}
-                    )
+                    FAB(
+                        "Search",
+                        Res.drawable.ic_search
+                    ) {
+
+                    }
                 }
 
                 MainTab.THINGS -> {
-                    ExtendedFloatingActionButton(
-                        text = {
-                            Text("Add")
-                        },
-                        icon = {
-                            Icon(
-                                painter = painterResource(Res.drawable.ic_add),
-                                contentDescription = null
-                            )
-                        },
-                        onClick = {}
-                    )
+                    FAB(
+                        "Add New Thing",
+                        Res.drawable.ic_add
+                    ) {
+
+                    }
                 }
 
                 MainTab.FLEETS -> {
-                    ExtendedFloatingActionButton(
-                        text = {
-                            Text("Add")
-                        },
-                        icon = {
-                            Icon(
-                                painter = painterResource(Res.drawable.ic_add),
-                                contentDescription = null
-                            )
-                        },
-                        onClick = {}
-                    )
+                    FAB(
+                        "Add New Fleet",
+                        Res.drawable.ic_add
+                    ) {
+
+                    }
                 }
 
                 MainTab.LOGS -> {}
@@ -195,6 +180,12 @@ fun DashboardPane(
                 Text(
                     modifier = Modifier.align(Alignment.Center),
                     text = "Map"
+                )
+
+                Legend(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
                 )
             }
         }
