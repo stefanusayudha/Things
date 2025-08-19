@@ -4,6 +4,7 @@ import infra.config.KafkaConfig
 import infra.kafka.events.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Clock
+import kotlinx.serialization.json.Json
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.LoggerFactory
 import java.util.*
@@ -12,9 +13,8 @@ class ThingsKafkaService(
     private val producer: KafkaProducerService = KafkaProducerService(),
     private val consumer: KafkaConsumerService = KafkaConsumerService()
 ) {
-    
     private val logger = LoggerFactory.getLogger(ThingsKafkaService::class.java)
-    
+
     // Event Publishing Methods
     suspend fun publishThingCreated(
         thingId: String,
@@ -30,14 +30,15 @@ class ThingsKafkaService(
             description = description,
             createdBy = createdBy
         )
-        
+        val message = Json.encodeToString(event)
+
         return producer.sendMessage(
             topic = KafkaConfig.Topics.THINGS_EVENTS,
             key = thingId,
-            message = event
+            message = message
         ).map { }
     }
-    
+
     suspend fun publishThingUpdated(
         thingId: String,
         changes: Map<String, String>,
@@ -50,14 +51,16 @@ class ThingsKafkaService(
             changes = changes,
             updatedBy = updatedBy
         )
-        
+
+        val message = Json.encodeToString(event)
+
         return producer.sendMessage(
             topic = KafkaConfig.Topics.THINGS_EVENTS,
             key = thingId,
-            message = event
+            message = message
         ).map { }
     }
-    
+
     suspend fun publishThingDeleted(
         thingId: String,
         deletedBy: String
@@ -68,14 +71,14 @@ class ThingsKafkaService(
             timestamp = Clock.System.now(),
             deletedBy = deletedBy
         )
-        
+        val message = Json.encodeToString(event)
         return producer.sendMessage(
             topic = KafkaConfig.Topics.THINGS_EVENTS,
             key = thingId,
-            message = event
+            message = message
         ).map { }
     }
-    
+
     suspend fun publishThingStatusChanged(
         thingId: String,
         oldStatus: String,
@@ -90,39 +93,42 @@ class ThingsKafkaService(
             newStatus = newStatus,
             changedBy = changedBy
         )
-        
+        val message = Json.encodeToString(event)
         return producer.sendMessage(
             topic = KafkaConfig.Topics.THINGS_EVENTS,
             key = thingId,
-            message = event
+            message = message
         ).map { }
     }
-    
+
     // Command Publishing Methods
     suspend fun publishCreateThingCommand(command: CreateThingCommand): Result<Unit> {
+        val message = Json.encodeToString(command)
         return producer.sendMessage(
             topic = KafkaConfig.Topics.THINGS_COMMANDS,
             key = command.thingId,
-            message = command
+            message = message
         ).map { }
     }
-    
+
     suspend fun publishUpdateThingCommand(command: UpdateThingCommand): Result<Unit> {
+        val message = Json.encodeToString(command)
         return producer.sendMessage(
             topic = KafkaConfig.Topics.THINGS_COMMANDS,
             key = command.thingId,
-            message = command
+            message = message
         ).map { }
     }
-    
+
     suspend fun publishDeleteThingCommand(command: DeleteThingCommand): Result<Unit> {
+        val message = Json.encodeToString(command)
         return producer.sendMessage(
             topic = KafkaConfig.Topics.THINGS_COMMANDS,
             key = command.thingId,
-            message = command
+            message = message
         ).map { }
     }
-    
+
     // Consumer Methods
     fun startEventConsumer(
         scope: CoroutineScope,
@@ -135,7 +141,7 @@ class ThingsKafkaService(
         )
         logger.info("Started consuming Thing events")
     }
-    
+
     fun startCommandConsumer(
         scope: CoroutineScope,
         commandHandler: suspend (ConsumerRecord<String, String>) -> Unit
@@ -147,11 +153,11 @@ class ThingsKafkaService(
         )
         logger.info("Started consuming Thing commands")
     }
-    
+
     fun stopConsumers() {
         consumer.stopConsuming()
     }
-    
+
     fun close() {
         producer.close()
         consumer.close()
