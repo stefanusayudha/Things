@@ -8,6 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.slf4j.LoggerFactory
 
+// fixme: kesalahan, infrastruktur tidak seharusnya memberikan interface untuk melakukan push message atau subscribe,
+//  namun memberikan objek interface untuk digunakan client
 object Infra {
     
     private val logger = LoggerFactory.getLogger(Infra::class.java)
